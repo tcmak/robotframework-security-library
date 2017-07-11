@@ -1,0 +1,13 @@
+*** Settings ***
+Resource  resource.txt
+
+*** Test Cases ***
+Checking Openned Ports    [Template]    Exactly these ports are openned
+    80  443  
+#22  25  80  8080
+
+*** Keywords ***
+Exactly these ports are openned    [Arguments]    @{expected_ports}
+    @{actual_ports_openned}=    Scan with Fast Mode    ${HOST}
+    List Should Contain Sub List   ${actual_ports_openned}      ${expected_ports}
+
